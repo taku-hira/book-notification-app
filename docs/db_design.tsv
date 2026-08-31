@@ -1,0 +1,51 @@
+テーブル名: users（会員情報）
+
+No	カラム名	型	NOT NULL	PK	FK	デフォルト値	説明
+1	id	bigint	○	○			主キー
+2	name	string	○				氏名
+3	email	string	○				メールアドレス（ユニーク）
+4	password_digest	string	○				パスワードハッシュ（bcrypt想定）
+5	line_user_id	string					LINE連携時のユーザーID（未連携はNULL）
+6	created_at	datetime	○				作成日時
+7	updated_at	datetime	○				更新日時
+
+
+テーブル名: books（本の情報）
+
+No	カラム名	型	NOT NULL	PK	FK	デフォルト値	説明
+1	id	bigint	○	○			主キー
+2	isbn	string	○				ISBN（ユニーク）
+3	title	string	○				タイトル
+4	author	string					著者名
+5	publisher	string					出版社
+6	release_date	date	○				発売日
+7	image_url	string					表紙画像URL
+8	source	string					取得元API（rakuten_books, openbd等）
+9	created_at	datetime	○				作成日時
+10	updated_at	datetime	○				更新日時
+
+
+テーブル名: user_books（ユーザーがフォローしている本）
+
+No	カラム名	型	NOT NULL	PK	FK	デフォルト値	説明
+1	id	bigint	○	○			主キー
+2	user_id	bigint	○		users		フォローしたユーザー
+3	book_id	bigint	○		books		フォロー対象の本
+4	notify_before_days	integer	○			1	発売日の何日前に通知するか
+5	created_at	datetime	○				作成日時
+6	updated_at	datetime	○				更新日時
+
+備考: (user_id, book_id) にユニークインデックスを設定
+
+
+テーブル名: notifications（通知送信履歴）
+
+No	カラム名	型	NOT NULL	PK	FK	デフォルト値	説明
+1	id	bigint	○	○			主キー
+2	user_id	bigint	○		users		通知対象ユーザー
+3	book_id	bigint	○		books		対象の本
+4	channel	string	○				通知手段（email, line）
+5	status	string	○			pending	送信状態（pending, sent, failed）
+6	sent_at	datetime					送信日時
+7	created_at	datetime	○				作成日時
+8	updated_at	datetime	○				更新日時

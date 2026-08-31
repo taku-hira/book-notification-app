@@ -1,0 +1,8 @@
+テーブル名: users
+
+No	カラム名	型	NOT NULL	PK	FK	デフォルト値	説明
+1	id	bigint	○	○			主キー
+2	name	string	○				氏名
+3	email	string	○				メールアドレス（ユニーク）
+4	created_at	datetime	○				作成日時
+5	updated_at	datetime	○				更新日時
